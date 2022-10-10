@@ -16,7 +16,6 @@ interface DetailProps {
 const window = Dimensions.get('window');
 
 const DetailPage: React.FC<DetailProps> = prop => {
-  console.log('props', prop.route.params?.data);
   let item = prop.route.params?.data;
 
   return (

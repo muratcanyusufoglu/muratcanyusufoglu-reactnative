@@ -33,22 +33,26 @@ const AddProductPage = () => {
     });
   };
 
+  //firstly loading categories
   useEffect(() => {
     load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  //When add product button clicked this function create a product and navigate the home page.
   const addProduct = async () => {
     await useFetch
       .postProduct(title, price, selectedCategory, description, imageLink)
       .then(resp => {
-        console.log('rr66', resp);
-        Alert.alert(resp.data.message);
-        if (resp.data.message == 'Success') {
-          navigation.navigate('Home' as never);
+        if (resp) {
+          Alert.alert(resp.data.message);
+          if (resp.data.message === 'Success') {
+            navigation.navigate('Home' as never);
+          }
         }
       });
   };
-  console.log('rr1', price);
+
   return (
     <View style={styles.container}>
       <View>
@@ -95,13 +99,13 @@ const AddProductPage = () => {
               key={index}
               onPress={() => setSelectedCategory(element.name)}
               style={
-                element.name == selectedCategory
+                element.name === selectedCategory
                   ? styles.categoriesBarActive
                   : styles.categoriesBarPasif
               }>
               <Text
                 style={
-                  element.name == selectedCategory
+                  element.name === selectedCategory
                     ? styles.categoriesTitle
                     : styles.categoriesTitlePasif
                 }

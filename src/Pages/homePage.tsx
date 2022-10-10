@@ -16,6 +16,7 @@ import {
   FlatList,
   ScrollView,
   View,
+  RefreshControl,
 } from 'react-native';
 
 import {ProductProps} from '../Props/interfaces';
@@ -24,13 +25,18 @@ import Card from '../Cards/productCard';
 import {useNavigation} from '@react-navigation/native';
 
 const HomePage = () => {
+  //useFetch is our service hook.
   const useFetch = new AppServices();
+  const navigation = useNavigation();
 
   const [product, setProduct] = useState<ProductProps>();
   const [categories, setCategories] = useState<any>();
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const load = async () => {
+    setLoading(true);
+
     await useFetch.getProducts().then(resp => {
       setProduct(resp);
       console.log('resp3', resp);
@@ -39,12 +45,15 @@ const HomePage = () => {
       setCategories([...resp, {name: 'All'}]);
       console.log('resp2', categories);
     });
-  };
 
+    setLoading(false);
+  };
+  //First time open the app load the products and categories with load func
   useEffect(() => {
     load();
   }, []);
 
+  //when category section change trigger this useEfffect and reload products
   useEffect(() => {
     if (selectedCategory === 'All') {
       load();
@@ -58,9 +67,20 @@ const HomePage = () => {
     }
   }, [selectedCategory]);
 
-  const navigation = useNavigation();
+  const onRefresh = () => {
+    load();
+  };
 
   const getComponent = ({item}: any) => <Card data={item} />;
+
+  //During the products loading show loading write.
+  if (loading) {
+    return (
+      <View style={styles.loadingView}>
+        <Text style={styles.loadingTitle}>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.body}>
@@ -86,8 +106,11 @@ const HomePage = () => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <View style={{flex: 6}}>
+      <View style={{flex: 8}}>
         <FlatList
+          refreshControl={
+            <RefreshControl refreshing={loading} onRefresh={onRefresh} />
+          }
           numColumns={2}
           keyExtractor={item => item.id}
           data={product}
@@ -173,6 +196,14 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 5,
     height: 50,
+  },
+  loadingTitle: {
+    fontSize: 50,
+    fontWeight: '800',
+  },
+  loadingView: {
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
   },
 });
 

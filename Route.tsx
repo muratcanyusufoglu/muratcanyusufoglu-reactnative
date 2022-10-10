@@ -12,7 +12,11 @@ function Route() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         {/* <Stack.Screen name="Payment" component ={Payment}/> */}
-        <Stack.Screen name="Home" component={HomePage} />
+        <Stack.Screen
+          name="Home"
+          component={HomePage}
+          options={{title: 'Upayments Store'}}
+        />
         <Stack.Screen name="Detail" component={DetailPage} />
         <Stack.Screen name="ProductAdd" component={AddProductPage} />
       </Stack.Navigator>
