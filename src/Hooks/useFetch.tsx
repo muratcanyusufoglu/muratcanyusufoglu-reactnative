@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {Alert} from 'react-native';
 
+//This class include all endpoints
 class AppServices {
   TOKEN = require('../../token');
   URLPRODUCT = 'https://upayments-studycase-api.herokuapp.com/api/products';
