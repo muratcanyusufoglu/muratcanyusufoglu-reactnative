@@ -6,4 +6,5 @@ Upayments test task.
 ![](https://github.com/muratcanyusufoglu/muratcanyusufoglu-reactnative/blob/main/src/assets/Screenshot_1665428965.png =570x220)
 ![](https://github.com/muratcanyusufoglu/muratcanyusufoglu-reactnative/blob/main/src/assets/Screenshot_1665428973.png =570x220)
 
+<img src="https://github.com/muratcanyusufoglu/muratcanyusufoglu-reactnative/blob/main/src/assets/Screenshot_1665428973.png" width="220" height="570"/>
 
